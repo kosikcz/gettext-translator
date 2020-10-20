@@ -2,16 +2,22 @@
 
 namespace GettextTranslator;
 
-use Nette;
 use Nette\Caching\Cache;
+use Nette\Caching\IStorage;
+use Nette\Caching\Storages\DevNullStorage;
+use Nette\Http\Response;
+use Nette\Http\Session;
+use Nette\Http\SessionSection;
+use Nette\Localization\ITranslator;
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 
 /**
  * @property string $lang
  */
-class Gettext implements Nette\Localization\ITranslator
+class Gettext implements ITranslator
 {
-	use \Nette\SmartObject;
+	use SmartObject;
 
 	const SKIP_CHAR = '!';
 
@@ -39,20 +45,20 @@ class Gettext implements Nette\Localization\ITranslator
 	/** @var bool */
 	private $loaded = FALSE;
 
-	/** @var Nette\Http\SessionSection */
+	/** @var SessionSection */
 	private $sessionStorage;
 
-	/** @var Nette\Caching\Cache */
+	/** @var Cache */
 	private $cache;
 
-	/** @var Nette\Http\Response */
+	/** @var Response */
 	private $httpResponse;
 
 
-	public function __construct(Nette\Http\Session $session, Nette\Caching\IStorage $cacheStorage, Nette\Http\Response $httpResponse, FileManager $fileManager)
+	public function __construct(Session $session, IStorage $cacheStorage, Response $httpResponse, FileManager $fileManager)
 	{
 		$this->sessionStorage = $sessionStorage = $session->getSection(self::$namespace);
-		$this->cache = new Nette\Caching\Cache(new Nette\Caching\Storages\DevNullStorage(), self::$namespace);
+		$this->cache = new Cache(new DevNullStorage(), self::$namespace);
 		$this->httpResponse = $httpResponse;
 		$this->fileManager = $fileManager;
 		/*
@@ -90,12 +96,12 @@ class Gettext implements Nette\Localization\ITranslator
 	/**
 	 * Get current language
 	 * @return string
-	 * @throws Nette\InvalidStateException
+	 * @throws \Nette\InvalidStateException
 	 */
 	public function getLang()
 	{
 		if (empty($this->lang)) {
-			throw new Nette\InvalidStateException('Language must be defined.');
+			throw new \Nette\InvalidStateException('Language must be defined.');
 		}
 
 		return $this->lang;
@@ -109,7 +115,7 @@ class Gettext implements Nette\Localization\ITranslator
 	public function setLang($lang)
 	{
 		if (empty($lang)) {
-			throw new Nette\InvalidStateException('Language must be nonempty string.');
+			throw new \Nette\InvalidStateException('Language must be nonempty string.');
 		}
 
 		if ($this->lang === $lang) {

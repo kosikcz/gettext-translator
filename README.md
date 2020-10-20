@@ -1,10 +1,11 @@
-Gettext Translator
+Gettext Translator FORK
 ===
 
 Gettext Translator based on Schmutzka gettexttranslator. 
 
 This tool that enables simple and user friendly translation of your texts via panel in debug bar.
-Works with the Nette 2.1. Do not use with 2.0!
+<s>Works with the Nette 2.1. Do not use with 2.0!</s><br />
+<b>Works with nette 2.4</b>
 
 No need to edit or operate with .po/.mo files.
 

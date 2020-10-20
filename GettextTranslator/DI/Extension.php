@@ -2,9 +2,9 @@
 
 namespace GettextTranslator\DI;
 
-use Nette;
+use Nette\DI\CompilerExtension;
 
-class Extension extends Nette\DI\CompilerExtension
+class Extension extends CompilerExtension
 {
 	/** @var array */
 	private $defaults = array(
@@ -42,6 +42,6 @@ class Extension extends Nette\DI\CompilerExtension
 }
 
 
-class InvalidConfigException extends Nette\InvalidStateException {
+class InvalidConfigException extends \Nette\InvalidStateException {
 
 }
