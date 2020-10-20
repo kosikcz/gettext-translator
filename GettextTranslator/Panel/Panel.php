@@ -5,7 +5,7 @@ namespace GettextTranslator;
 use Nette;
 
 
-class Panel extends Nette\Object implements Nette\Diagnostics\IBarPanel
+class Panel implements \Tracy\IBarPanel
 {
 	/** @var string */
 	private $xhrHeader = 'X-Translation-Client';
@@ -195,7 +195,7 @@ class Panel extends Nette\Object implements Nette\Diagnostics\IBarPanel
 			return;
 		}
 
-		$tmp = explode(':', $this->application->presenter->name);
+		$tmp = explode(':', $this->application->getPresenter()->name);
 
 		if (count($tmp) >= 2) {
 			$module = strtolower($tmp[0]);

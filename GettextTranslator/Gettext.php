@@ -6,9 +6,13 @@ use Nette;
 use Nette\Caching\Cache;
 use Nette\Utils\Strings;
 
-
-class Gettext extends Nette\Object implements Nette\Localization\ITranslator
+/**
+ * @property string $lang
+ */
+class Gettext implements Nette\Localization\ITranslator
 {
+	use \Nette\SmartObject;
+
 	const SKIP_CHAR = '!';
 
 	/** @var FileManager */

@@ -6,7 +6,7 @@ use Nette;
 use Nette\Utils\Strings;
 
 
-class FileManager extends Nette\Object
+class FileManager
 {
 	/** @var array { [ key => default ] } */
 	private $defaultMetadata = array(
