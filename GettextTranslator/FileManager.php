@@ -2,12 +2,14 @@
 
 namespace GettextTranslator;
 
-use Nette;
+use Nette\SmartObject;
 use Nette\Utils\Strings;
 
 
 class FileManager
 {
+	use SmartObject;
+
 	/** @var array { [ key => default ] } */
 	private $defaultMetadata = array(
 		'Project-Id-Version' => '',

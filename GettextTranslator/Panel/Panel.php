@@ -2,11 +2,18 @@
 
 namespace GettextTranslator;
 
-use Nette;
+use Nette\Application\Application;
+use Nette\Http\Request;
+use Nette\Http\Session;
+use Nette\Http\SessionSection;
+use Nette\SmartObject;
+use Tracy\Debugger;
+use Tracy\IBarPanel;
 
-
-class Panel implements \Tracy\IBarPanel
+class Panel implements IBarPanel
 {
+	use SmartObject;
+
 	/** @var string */
 	private $xhrHeader = 'X-Translation-Client';
 
@@ -22,28 +29,28 @@ class Panel implements \Tracy\IBarPanel
 	/** @var int */
 	private $height;
 
-	/** @var Nette\Application\Application */
+	/** @var Application */
 	private $application;
 
-	/** @var GettextTranslator\Gettext */
+	/** @var Gettext */
 	private $translator;
 
-	/** @var Nette\Http\SessionSection */
+	/** @var SessionSection */
 	private $sessionStorage;
 
-	/** @var Nette\Http\Request */
+	/** @var Request */
 	private $httpRequest;
 
 
 	/**
-	 * @param Nette\Application\Application
-	 * @param Gettext\Translator\Gettext
-	 * @param Nette\Http\Session
-	 * @param Nette\Http\Request
+	 * @param Application
+	 * @param Gettext
+	 * @param Session
+	 * @param Request
 	 * @param string
 	 * @param int
 	 */
-	public function __construct(Nette\Application\Application $application, Gettext $translator, Nette\Http\Session $session, Nette\Http\Request $httpRequest, $layout, $height)
+	public function __construct(Application $application, Gettext $translator, Session $session, Request $httpRequest, $layout, $height)
 	{
 		$this->application = $application;
 		$this->translator = $translator;
@@ -171,16 +178,16 @@ class Panel implements \Tracy\IBarPanel
 
 	/**
 	 * Register this panel
-	 * @param Nette\Application\Application
-	 * @param GettextTranslator\Gettext
-	 * @param Nette\Http\Session
-	 * @param Nette\Http\Request
+	 * @param Application
+	 * @param Gettext
+	 * @param Session
+	 * @param Request
 	 * @param int
 	 * @param int
 	 */
-	public static function register(Nette\Application\Application $application, Gettext $translator, Nette\Http\Session $session, Nette\Http\Request $httpRequest, $layout, $height)
+	public static function register(Application $application, Gettext $translator, Session $session, Request $httpRequest, $layout, $height)
 	{
-		Nette\Diagnostics\Debugger::getBar()->addPanel(new static($application, $translator, $session, $httpRequest, $layout, $height));
+		Debugger::getBar()->addPanel(new static($application, $translator, $session, $httpRequest, $layout, $height));
 	}
 
 
